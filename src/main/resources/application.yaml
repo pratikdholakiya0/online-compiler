@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: babycode
+app:
+  workspace-dir: ${WORKSPACE_DIR:/tmp}
+  workspace-host-dir: ${WORKSPACE_HOST_DIR:}
