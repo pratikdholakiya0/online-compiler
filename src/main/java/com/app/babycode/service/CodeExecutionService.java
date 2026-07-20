@@ -43,7 +43,7 @@ public class CodeExecutionService {
         if (workspaceHostDir == null || workspaceHostDir.isBlank()) {
             return workDir.toAbsolutePath().toString();
         }
-        return workspaceHostDir + "\\" + folderName;
+        return workspaceHostDir + "//" + folderName;
     }
 
     public Submission submitCode(SubmissionRequest request) throws Exception {
