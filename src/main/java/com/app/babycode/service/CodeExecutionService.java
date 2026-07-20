@@ -131,7 +131,6 @@ public class CodeExecutionService {
             process.destroyForcibly();
             try{
                 new ProcessBuilder("docker", "kill", containerName).start().waitFor();
-                submission.setStatus(SubmissionStatus.COMPLETED);
             } catch (Exception e) {
                 log.warn("Failed to kill container after timeout: {}", e.getMessage());
             }
@@ -140,7 +139,10 @@ public class CodeExecutionService {
             String partialStderr = stderrFuture.get();
 
             process.destroyForcibly();
-            return executionResult(Verdict.TIME_LIMIT_EXCEEDED, partialStdout, partialStderr);
+            ExecutionResult result = executionResult(Verdict.TIME_LIMIT_EXCEEDED, partialStdout, partialStderr);
+            submission.setResult(result);
+            submission.setStatus(SubmissionStatus.COMPLETED);
+            return result;
         }
 
         int exitCode = process.exitValue();
