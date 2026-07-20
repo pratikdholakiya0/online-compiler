@@ -1,0 +1,90 @@
+.build-strip {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.build-strip__segment {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 0;
+  position: relative;
+}
+
+.build-strip__segment:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 24px;
+  height: 1px;
+  background: var(--border);
+  transform: translateY(-50%);
+}
+
+.build-strip__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.build-strip__label {
+  color: var(--text-muted);
+  transition: color 0.25s ease;
+}
+
+.build-strip__segment--lit .build-strip__dot {
+  background: var(--segment-color, var(--amber));
+  box-shadow: 0 0 8px var(--segment-color, var(--amber));
+}
+
+.build-strip__segment--lit .build-strip__label {
+  color: var(--text);
+}
+
+.build-strip__segment--pulsing .build-strip__dot {
+  animation: build-strip-pulse 1.1s ease-in-out infinite;
+}
+
+.build-strip__segment--dim .build-strip__label {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+@keyframes build-strip-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 480px) {
+  .build-strip {
+    font-size: 10px;
+  }
+
+  .build-strip__segment {
+    gap: 5px;
+    padding: 4px 8px 4px 0;
+  }
+
+  .build-strip__segment:not(:last-child)::after {
+    width: 12px;
+  }
+
+  .build-strip__label {
+    display: none;
+  }
+}
