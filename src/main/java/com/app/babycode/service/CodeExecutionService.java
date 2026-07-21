@@ -21,6 +21,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.*;
 
+import static org.springframework.util.FileSystemUtils.deleteRecursively;
+
 @Slf4j
 @Service
 public class CodeExecutionService {
@@ -154,11 +156,13 @@ public class CodeExecutionService {
 
         process.destroyForcibly();
 
-        ExecutionResult executionResult = executionResult(exitCode == 0 ? Verdict.SUCCESS : exitCode==137? Verdict.MEMORY_LIMIT_EXCEEDED :  Verdict.RUNTIME_ERROR, stdout.replace("\n", ""), errorResponse);
+        ExecutionResult executionResult = executionResult(exitCode == 0 ? Verdict.SUCCESS : exitCode==137? Verdict.MEMORY_LIMIT_EXCEEDED :  Verdict.RUNTIME_ERROR, stdout, errorResponse);
 
         submission.setResult(executionResult);
         submission.setStatus(SubmissionStatus.COMPLETED);
 
+
+        deleteRecursively(workDir);
         return executionResult;
     }
 

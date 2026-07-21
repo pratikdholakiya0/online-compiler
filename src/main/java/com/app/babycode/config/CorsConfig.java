@@ -15,7 +15,8 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
                         .allowedOriginPatterns(
-                                "https://babycode-compiler.vercel.app"
+                                "https://babycode-compiler.vercel.app",
+                                "http://localhost:5173"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
